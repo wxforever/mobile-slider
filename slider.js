@@ -48,6 +48,7 @@
 	  if(this.slider.offsetY>20){
 	  	
 	  	 //up(ck);
+	  	
 	  	 this.slider.indexArr.push(this.slider.currentIndex);
 	  	// this.slider.nodelist[this.slider.currentIndex].addClass('anim fadeOut');
 	  //	this.slider.nodelist[this.slider.currentIndex].className+=' '+'anim fadeOut';
@@ -62,16 +63,23 @@
              setTimeout(function(){//通过setTimeout的嵌套实现在两个时间点对同样参数的访问，这里的function都是闭包
                 _this.slider.nodelist[index].style.display='none';
                 _this.slider.nodelist[index].style.zIndex='';
-             },1000)
+             },500)
 	  	 	//  _this.slider.nodelist[index].removeClass('anim fadeOut');
             //  _this.slider.nodelist[index].className = _this.slider.nodelist[index].className.replace(new RegExp('(^|\\b)' + 'anim fadeOut'.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
 
-	  	 },0);
+	  	 },10);//这里改为10ms，为0的话会影响顺序
 	  	   //对下一页的处理
 	  	 var index=this.slider.getnextindex(1);
 	  	// this.slider.nodelist[index].addClass('anim fadein');
 	  	this.slider.nodelist[index].className+=' '+css;
 	  	  this.slider.nodelist[index].style.display='block';
+	  	  /*
+	  	   var repeate=this.slider.indexArr.indexOf(this.slider.currentIndex);
+	  	 if(repeate>-1){
+	  	 	this.slider.indexArr.splice(repeate,1);
+
+	  	 }
+	  	 */
 	  	   this.slider.currentIndex=index;
           //移除动画类
 	  	 setTimeout(function(){
@@ -82,7 +90,13 @@
 
 	  }else if(this.slider.offsetY<-20){
 	  	//down(ck);
-	  		 this.slider.indexArr.push(this.slider.currentIndex);
+	  		// this.slider.indexArr.push(this.slider.currentIndex);
+	      var repeate=this.slider.indexArr.indexOf(this.slider.currentIndex);
+	  	 if(repeate>-1){
+	  	 	this.slider.indexArr.splice(repeate,1);
+
+	  	 }
+	  		this.slider.indexArr.push(this.slider.currentIndex);
 	  	 //this.slider.nodelist[this.slider.currentIndex].className+=' '+'anim fadeOut';
 	  	 var _this=this;
 	  	 //对当前页的处理
@@ -101,6 +115,11 @@
 	  	 //this.slider.nodelist[index].addClass('anim fadein');
 	  	 	this.slider.nodelist[index].className+=' '+css;
 	  	  this.slider.nodelist[index].style.display='block';
+	/* 	  	   var repeate=this.slider.indexArr.indexOf(this.slider.currentIndex);
+	  	 if(repeate>-1){
+	  	 	this.slider.indexArr.splice(repeate,1);
+
+	  	 }  */ 
 	  	   this.slider.currentIndex=index;
 	  	  var _this=this;
 	  	 setTimeout(function(){
